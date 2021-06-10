@@ -66,7 +66,6 @@ public class ContactApp {
             System.out.println(line);
         }
 
-
 // search feature for items
 
         Scanner scanner = new Scanner(System.in);
@@ -77,25 +76,24 @@ public class ContactApp {
         } else {
             System.out.println("Sorry, we do not have that item available");
         }
+
+//delete feature
+        //      List<String> currentList = new ArrayList<>();
+        try {
+            currentList = Files.readAllLines(toOurDataFile);
+
+            Iterator<String> listIterator = currentList.iterator();
+            while (listIterator.hasNext()) {
+                //String item = listIterator.next();
+                if (currentList.contains("eggs")) {
+                    listIterator.remove();
+                }
+            }
+        } catch (IOException iox) {
+            iox.printStackTrace();
+        }
     }
 }
-
-//        //      List<String> currentList = new ArrayList<>();
-//        try {
-//            currentList = Files.readAllLines(toOurDataFile);
-//
-//            Iterator<String> listIterator = currentList.iterator();
-//            while (listIterator.hasNext()) {
-//                String item = listIterator.next();
-//                if (item.equals("eggs")) {
-//                    listIterator.remove();
-//                }
-//            }
-//        } catch (IOException iox) {
-//            iox.printStackTrace();
-//        }
-//    }
-//}
 
 //        List<String> Files.readAllLines( src/contacts.txt);
 
