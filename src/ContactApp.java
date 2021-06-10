@@ -1,9 +1,7 @@
-import java.util.List;
+import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.nio.file.Files.readAllLines;
@@ -11,8 +9,22 @@ import static java.nio.file.Files.readAllLines;
 public class ContactApp {
 
 
-
     public static void main(String[] args) {
+        List<String> currentList = new ArrayList<>();
+
+
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("What would you like to search for?");
+//        String userSearch = scanner.next();
+//        if (currentList.contains(userSearch)) {
+
+
+//        System.out.println("here is the item you search for: " + userSearch);
+//    } else {
+//            System.out.println("Sorry, we do not have that item available");
+//        }
+//
+
 
         Path toOurDataPlace = Paths.get("src");
         Path toOurDataFile = Paths.get(String.valueOf(toOurDataPlace), "contacts.txt");
@@ -27,11 +39,22 @@ public class ContactApp {
             ioe.printStackTrace();
         }
 
-        List<String> currentList = new ArrayList<>();
 
         /////////////////////
 
 //        List<String> currentList = new ArrayList<>();
+// adds a string to the text file
+        try {
+
+            Files.write(
+                    Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
+                    Arrays.asList("eggs"), // list with one item
+                    StandardOpenOption.APPEND
+            );
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
 
         try { // read the file
             currentList = Files.readAllLines(toOurDataFile);
@@ -44,11 +67,35 @@ public class ContactApp {
         }
 
 
+// search feature for items
 
-
-
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("What would you like to search for?");
+        String userSearch = scanner.next();
+        if (currentList.contains(userSearch)) {
+            System.out.println("here is the item you search for: " + userSearch);
+        } else {
+            System.out.println("Sorry, we do not have that item available");
+        }
     }
 }
+
+//        //      List<String> currentList = new ArrayList<>();
+//        try {
+//            currentList = Files.readAllLines(toOurDataFile);
+//
+//            Iterator<String> listIterator = currentList.iterator();
+//            while (listIterator.hasNext()) {
+//                String item = listIterator.next();
+//                if (item.equals("eggs")) {
+//                    listIterator.remove();
+//                }
+//            }
+//        } catch (IOException iox) {
+//            iox.printStackTrace();
+//        }
+//    }
+//}
 
 //        List<String> Files.readAllLines( src/contacts.txt);
 
