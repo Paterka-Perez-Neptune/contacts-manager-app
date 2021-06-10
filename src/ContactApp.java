@@ -1,8 +1,11 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
+
 import static java.nio.file.Files.readAllLines;
 
 public class ContactApp {
@@ -10,10 +13,23 @@ public class ContactApp {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
+// displays the line of text from the contacts page
+//        int n = 2; // The line number
+//        String line;
+//        try (BufferedReader br = new BufferedReader(new FileReader("src/contacts.txt"))) {
+//            for (int i = 0; i < n; i++)
+//                br.readLine();
+//            line = br.readLine();
+//            System.out.println(line);
+//        }
+//        catch(IOException e){
+//            System.out.println(e);
+//        }
+
+        // Scanner int UserEntry = new scanner.nextInt();
         List<String> currentList = new ArrayList<>(); // creates our array list
 
-//       this is connecting to out contacts.txt file
+//       this is connecting to our contacts.txt file
         Path toOurDataPlace = Paths.get("src");
         Path toOurDataFile = Paths.get(String.valueOf(toOurDataPlace), "contacts.txt");
 
@@ -25,54 +41,66 @@ public class ContactApp {
         }
 
 //        USER MENU!
-        System.out.println("1. View contacts.\n 2. Add a new contact\n 3. Search a contact by name.\n Delete an existing contact.\n 5 Exit\n Enter an option (1, 2, 3, 4 or 5):");
-        if (scanner.nextInt() == 1) {
-            //         outputting all the file items
-            for (String line : currentList) {
-                System.out.println(line);
-            }
-        }
-        if (scanner.nextInt() == 2) {
-            // this code to adds items to list
-            try {
-                System.out.println("please type the name of the item you would like to add to your list");
-                String userAddItem = scanner.next();
-                Files.write(
-                        Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
-                        Arrays.asList(userAddItem), // list with one item
-                        StandardOpenOption.APPEND
-                );
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-            }
-        }
-        if (scanner.nextInt() == 3) {
-            //        search for items
-            System.out.println("What would you like to search for?");
-            String userSearch = scanner.next();
-            if (currentList.contains(userSearch)) {
-                System.out.println("here is the item you search for: " + userSearch);
-            } else {
-                System.out.println("Sorry, we do not have that item available");
-            }
-        }
-        if (scanner.nextInt() == 4) {
-            //        delete feature
-            System.out.println("What would you like to remove?");
-            String userSearch2 = scanner.next();
-            if (currentList.contains(userSearch2)) {
-                currentList.remove(userSearch2);
-//          this is code to rewrite the file
+        System.out.println("1. View contacts.\n2. Add a new contact\n3. Search a contact by name.\n4. Delete an existing contact.\n5. Exit\n Enter an option (1, 2, 3, 4 or 5):");
+        Scanner scanner = new Scanner(System.in);
+
+        int userSelection = Integer.parseInt(scanner.nextLine().trim());
+        switch (userSelection) {
+            case 1:
+                //    View contact list
+                for (String line : currentList) {
+                    System.out.println(line);
+                }
+                break;
+            case 2:
+                // Add a new contact
                 try {
-                    Files.write(toOurDataFile, currentList);
+                    System.out.println("please type the name of the item you would like to add to your list");
+                    String userAddItem = scanner.next();
+                    Files.write(
+                            Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
+                            Arrays.asList(userAddItem), // list with one item
+                            StandardOpenOption.APPEND
+                    );
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 }
-            } else {
-                System.out.println("Sorry, we do not have that item");
-            }
+                break;
+            case 3:
+                //  Search a contact by name
+                System.out.println("What would you like to search for?");
+                String userSearch = scanner.next();
+                if (currentList.contains(userSearch)) {
+                    System.out.println("here is the item you search for: " + userSearch);
+                } else {
+                    System.out.println("Sorry, we do not have that item available");
+                }
+                break;
+            case 4:
+                // Search a contact by number
+                System.out.println("What would you like to remove?");
+                String userSearch2 = scanner.next();
+                if (currentList.contains(userSearch2)) {
+                    currentList.remove(userSearch2);
+//          this is code to rewrite the file
+                    try {
+                        Files.write(toOurDataFile, currentList);
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                } else {
+                    System.out.println("Sorry, we do not have that item");
+                }
+                System.out.println(currentList);
+                break;
+            case 5:
+      // Exit
+                System.out.println("Thank you!!");
+                System.exit(0);
+            default:
+                System.err.println("Please enter a number between 1 - 5!");
+                break;
         }
-
-        System.out.println(currentList); // checking list accuracy
+      //  System.out.println(currentList); // checking list accuracy
     }
 }
