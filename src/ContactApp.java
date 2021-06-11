@@ -28,9 +28,12 @@ public class ContactApp {
             switch (userSelection) {
                 case 1:
                     //    View contacts
+                    System.out.println("Name     |      Phone Number\n" +
+                            "---------------------------");
                     for (String line : currentList) {
                         System.out.println(line);
                     }
+
                     x = true;
                     break;
                 case 2:
