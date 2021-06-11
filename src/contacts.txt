@@ -1,4 +1,5 @@
 
-Juan Garcia 345-678-9012
-Hannah Paterka 456-789-0123
-Hannah Paterka | 123
+Juan Garcia | 345-678-9012
+Hannah Paterka | 123-456-7890
+John Smith | 123-333-3333
+

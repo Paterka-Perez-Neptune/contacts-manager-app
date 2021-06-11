@@ -45,10 +45,28 @@ public class ContactApp {
                             System.err.println("There's already a contact named " + userAddName + ". Do you want to overwrite it? (Yes/No)");
                             if (scanner.next().equalsIgnoreCase("yes")) {
                                 // need to remove item
-                                Files.write(
-                                        Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
-                                        Arrays.asList(newContact), // list with one item
-                                        StandardOpenOption.APPEND);
+
+                                for (String line : currentList) {
+                                    if (line.contains(userAddName)) {
+                                       // System.out.println(currentList);
+                                        currentList.remove(line);
+                                        System.out.println(currentList);
+                                        break;
+                                    }
+                                }
+
+                                Path myPath = Paths.get("src/contacts.txt");
+
+
+                                try {
+                                    Files.write(myPath, currentList);
+                                } catch (Exception exc) {
+                                    exc.printStackTrace();
+                                }
+
+
+
+
                             } else {
                                 do {
                                     System.out.println("please retype the name of the item you would like to add to your list");
@@ -58,10 +76,23 @@ public class ContactApp {
                                     } else {
                                         System.out.println("Success!!");
                                         // add remove stuff
-                                        Files.write(
-                                                Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
-                                                Arrays.asList(newContact),
-                                                StandardOpenOption.APPEND);
+                                        for (String line : currentList) {
+                                            if (line.contains(userAddName)) {
+                                                System.out.println(currentList);
+                                                currentList.remove(line);
+                                                System.out.println(currentList);
+                                                break;
+                                            }
+                                        }
+
+                                        Path myPath = Paths.get("src/contacts.txt");
+
+
+                                        try {
+                                            Files.write(myPath, currentList);
+                                        } catch (Exception exc) {
+                                            exc.printStackTrace();
+                                        }
                                     }
                                 } while (currentList.contains(userAddName));
                             }
@@ -82,7 +113,7 @@ public class ContactApp {
                     System.out.println("What would you like to search for?");
                     String userSearch = scanner.next();
                     for (String line : currentList) {
-                        if (line.contains(userSearch))
+                        if (line.toLowerCase(Locale.ROOT).contains(userSearch.toLowerCase()))
                             System.out.println(line);
                     }
                     x = true;
