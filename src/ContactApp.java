@@ -108,6 +108,7 @@ public class ContactApp {
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     }
+                    System.out.println("Okay! The user has been added.");
                     //    View contacts
                     x = true;
                     break;
@@ -125,13 +126,14 @@ public class ContactApp {
                     // Search a contact by number
                     System.out.println("What would you like to remove?");
                     String userSearch2 = scanner.next();
-                    System.out.println(currentList.toString().contains("missy"));
+                 //   System.out.println(currentList.toString().contains("missy"));
                     try {
                         for (String line : currentList) {
-                            if (line.contains(userSearch2)) {
-                                System.out.println(currentList);
+                            if (line.toLowerCase(Locale.ROOT).contains(userSearch2.toLowerCase(Locale.ROOT))) {
+                               // System.out.println(currentList);
                                 currentList.remove(line);
-                                System.out.println(currentList);
+                               // System.out.println(currentList);
+                                System.out.println("Okay! The requested user has been deleted");
                                 break;
                             }
                         }
