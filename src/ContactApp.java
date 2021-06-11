@@ -88,30 +88,39 @@ public class ContactApp {
                     x = true;
                     break;
                 case 4:
-
-
-
                     // Search a contact by number
                     System.out.println("What would you like to remove?");
                     String userSearch2 = scanner.next();
-                    if (currentList.contains(userSearch2)) {
-
+                    System.out.println(currentList.toString().contains("missy"));
+                    try {
                         for (String line : currentList) {
-                            if (line.contains(userSearch2));
+                            if (line.contains(userSearch2)) {
+                                System.out.println(currentList);
                                 currentList.remove(line);
-
+                                System.out.println(currentList);
+                                break;
+                            }
                         }
 
+                        Path myPath = Paths.get("src/contacts.txt");
 
-//          this is code to rewrite the file
+
                         try {
-                            Files.write(toOurDataFile, currentList);
-                        } catch (IOException ioe) {
-                            ioe.printStackTrace();
+                            Files.write(myPath, currentList);
+                        } catch (Exception exc) {
+                            exc.printStackTrace();
                         }
-                    } else {
-                        System.out.println("Sorry, we do not have that item");
+
+
+
+
+
+
+
+                    } catch (ConcurrentModificationException ex) {
+                        ex.printStackTrace();
                     }
+
                     x = true;
                     break;
                 case 5:

@@ -1,6 +1,4 @@
 
-juan
-bill
-bill | 24242
-juan | 2424
-missy | 333333
+Juan Garcia 345-678-9012
+Hannah Paterka 456-789-0123
+Hannah Paterka | 123
