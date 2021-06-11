@@ -55,9 +55,6 @@ public class ContactApp {
                 ioe.printStackTrace();
             }
 
-
-
-
             //        USER MENU!
             System.out.println("\n1. View contacts.\n2. Add a new contact\n3. Search a contact by name.\n4. Delete an existing contact.\n5. Exit\n Enter an option (1, 2, 3, 4 or 5):");
             Scanner scanner = new Scanner(System.in);
@@ -72,45 +69,58 @@ public class ContactApp {
                     break;
                 case 2:
                     // Add a new contact
+
                     try {
-                        System.out.println("please type the name of the item you would like to add to your list");
+                        try {
+                            Files.write(toOurDataFile, currentList);
+
+                        System.out.println("please type the name of the contact you would like to add to your list");
                         String userAddItem = scanner.next();
 
-
-                        do {
                             if (currentList.contains(userAddItem)) {
+                                // get to delete/modify the identical one
                                 System.err.println("There's already a contact named " + userAddItem + ". Do you want to overwrite it? (Yes/No)");
-                                if (scanner.next().equalsIgnoreCase("yes")) {
+                                String userOverwrite = scanner.next();
+
+                                if (userOverwrite.equalsIgnoreCase("yes")) {
+                                    for (String line : currentList) {
+                                        if (line.contains(userAddItem))
+                                            //   System.out.println(line);
+                                            currentList.remove(userAddItem);
+//          this is code to rewrite the file
+
+                                    }
+                                }
+                                if (userOverwrite.equalsIgnoreCase("yes")) {
+//                                        currentList.remove(userAddItem);
+//                            //          this is code to rewrite the file
+//                                        try {
+//                                            Files.write(toOurDataFile, currentList);
+//                                        } catch (IOException ioe) {
+//                                            ioe.printStackTrace();
+//                                        }
                                     Files.write(
                                             Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
                                             Arrays.asList(userAddItem), // list with one item
-                                            StandardOpenOption.APPEND
-                                    );
+                                            StandardOpenOption.APPEND);
                                 } else {
-                                    System.out.println("please retype the name of the item you would like to add to your list");
+                                    System.out.println("please retype the name of the contact you would like to add to your list");
                                     userAddItem = scanner.next();
                                     Files.write(
                                             Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
                                             Arrays.asList(userAddItem),
                                             StandardOpenOption.APPEND);
                                 }
+                            } else {
+                                Files.write(
+                                        Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
+                                        Arrays.asList(userAddItem),
+                                        StandardOpenOption.APPEND);
                             }
-                        } while (currentList.contains(userAddItem));
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    } catch (IOException ioe) {
-                        ioe.printStackTrace();
+                        }catch (IOException ioe) {
+                                ioe.printStackTrace(); }
+                    } catch (ConcurrentModificationException cme) {
+                        cme.printStackTrace();
                     }
 
                     //         reads the file
@@ -149,7 +159,7 @@ public class ContactApp {
                             ioe.printStackTrace();
                         }
                     } else {
-                        System.out.println("Sorry, we do not have that item");
+                        System.out.println("Sorry, we do not have that contact");
                     }
                     x = true;
                     break;
