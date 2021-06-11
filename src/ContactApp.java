@@ -2,61 +2,24 @@ import java.io.*;
 import java.util.*;
 import java.nio.file.*;
 import java.util.List;
-import java.io.LineNumberReader;
-
-import static java.nio.file.Files.readAllLines;
 
 public class ContactApp {
 
-//    Scanner scanner = new Scanner(System.in);
-//
-//
-////    public int getLineNumber() {
-////        return 0;
-////    }
-//
-//    public boolean yesNo() {
-//        String response = scanner.nextLine();
-//        if (response.trim().equalsIgnoreCase("y") || response.trim().equalsIgnoreCase("yes")) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
     public static void main(String[] args) {
 
-// displays the line of text from the contacts page
-//        int n = 2; // The line number
-//        String line;
-//        try (BufferedReader br = new BufferedReader(new FileReader("src/contacts.txt"))) {
-//            for (int i = 0; i < n; i++)
-//                br.readLine();
-//            line = br.readLine();
-//            System.out.println(line);
-//        }
-//        catch(IOException e){
-//            System.out.println(e);
-//        }
         boolean x = false;
-
-        // Scanner int UserEntry = new scanner.nextInt();
         do {
-            List<String> currentList = new ArrayList<>(); // creates our array list
-
-    //       this is connecting to our contacts.txt file
+            List<String> currentList = new ArrayList<>(); // creates array list
+    //       connects to the contacts.txt file
             Path toOurDataPlace = Paths.get("src");
             Path toOurDataFile = Paths.get(String.valueOf(toOurDataPlace), "contacts.txt");
 
-    //         reads the file
+    //         reads file
             try {
                 currentList = Files.readAllLines(toOurDataFile);
             } catch (IOException ioe) {
                 ioe.printStackTrace();
             }
-
-
-
 
             //        USER MENU!
             System.out.println("\n1. View contacts.\n2. Add a new contact\n3. Search a contact by name.\n4. Delete an existing contact.\n5. Exit\n Enter an option (1, 2, 3, 4 or 5):");
@@ -73,55 +36,53 @@ public class ContactApp {
                 case 2:
                     // Add a new contact
                     try {
-                        System.out.println("please type the name of the item you would like to add to your list");
-                        String userAddItem = scanner.next();
-
-
-                        do {
+                        System.out.println("Please type the name of the person you would like to add to your list");
+                        String userAddItem = scanner.nextLine();
+                        System.out.println("Please type their phone number");
+                        String userAddPhone = scanner.nextLine();
+                        String newContact = userAddItem + " | " + userAddPhone;
                             if (currentList.contains(userAddItem)) {
                                 System.err.println("There's already a contact named " + userAddItem + ". Do you want to overwrite it? (Yes/No)");
                                 if (scanner.next().equalsIgnoreCase("yes")) {
+                                    if (currentList.contains(userAddItem)) {
+                                        currentList.remove(userAddItem);
+                                        try {
+                                            Files.write(toOurDataFile, currentList);
+                                        } catch (IOException ioe) {
+                                            ioe.printStackTrace();
+                                        }
+                                    } else {
+                                        System.out.println("Sorry, we do not have that item");
+                                    }
                                     Files.write(
                                             Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
-                                            Arrays.asList(userAddItem), // list with one item
+                                            Arrays.asList(newContact), // list with one item
                                             StandardOpenOption.APPEND
                                     );
                                 } else {
-                                    System.out.println("please retype the name of the item you would like to add to your list");
-                                    userAddItem = scanner.next();
-                                    Files.write(
-                                            Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
-                                            Arrays.asList(userAddItem),
-                                            StandardOpenOption.APPEND);
+                                    do {
+                                        System.out.println("please retype the name of the item you would like to add to your list");
+                                        userAddItem = scanner.next();
+                                        if (currentList.contains(userAddItem)) {
+                                            System.err.println("There's already a contact with this name");
+                                        } else {
+                                            System.out.println("Success!!");
+                                            // add remove stuff
+                                            Files.write(
+                                                    Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
+                                                    Arrays.asList(userAddItem),
+                                                    StandardOpenOption.APPEND);
+                                        }
+                                    } while (currentList.contains(userAddItem));
                                 }
+                            } else {
+                                Files.write(
+                                        Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
+                                        Arrays.asList(userAddItem), // list with one item
+                                        StandardOpenOption.APPEND);
                             }
-                        } while (currentList.contains(userAddItem));
-
-
-
-
-
-
-
-
-
-
-
-
-
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
-                    }
-
-                    //         reads the file
-                    try {
-                        currentList = Files.readAllLines(toOurDataFile);
-                    } catch (IOException ioe) {
-                        ioe.printStackTrace();
-                    }
-
-                    for (String line : currentList) {
-                        System.out.println(line);
                     }
                     //    View contacts
                     x = true;
@@ -162,6 +123,5 @@ public class ContactApp {
                     break;
             }
         } while (x = true);
-
     }
 }
