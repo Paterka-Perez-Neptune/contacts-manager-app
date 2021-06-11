@@ -8,9 +8,9 @@ import static java.nio.file.Files.readAllLines;
 
 public class ContactApp {
 
-    public int getLineNumber() {
-
-    }
+//    public int getLineNumber() {
+//        return 0;
+//    }
 
     public static void main(String[] args) {
 
@@ -41,110 +41,75 @@ public class ContactApp {
             ioe.printStackTrace();
         }
 
-//        USER MENU!
-        System.out.println("1. View contacts.\n2. Add a new contact\n3. Search a contact by name.\n4. Delete an existing contact.\n5. Exit\n Enter an option (1, 2, 3, 4 or 5):");
-        Scanner scanner = new Scanner(System.in);
 
-        int userSelection = Integer.parseInt(scanner.nextLine().trim());
-        switch (userSelection) {
-            case 1:
-                //    View contact list
-                for (String line : currentList) {
-                    System.out.println(line);
-                }
-                break;
-            case 2:
-                // Add a new contact
-                try {
-                    System.out.println("please type the name of the item you would like to add to your list");
-                    String userAddItem = scanner.next();
-                    Files.write(
-                            Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
-                            Arrays.asList(userAddItem), // list with one item
-                            StandardOpenOption.APPEND
-                    );
-                } catch (IOException ioe) {
-                    ioe.printStackTrace();
-                }
-                break;
-            case 3:
-                // *** todo: Add the code from the hottodojava website so you can get the line number
-                 // Search a contact by name
-                System.out.println("What would you like to search for?");
-                String userSearch = scanner.next();
-                if (currentList.contains(userSearch)) {
-                   ;
-                    System.out.println("here is the item you search for: " + userSearch);
-                } else {
-                    System.out.println("Sorry, we do not have that item available");
-                }
-              //  File file = new File("contacts.txt");
+        boolean x = false;
 
-            //    try {
-//                    Scanner sc = new Scanner(System.in);
-//                    System.out.println("What would you like to search for?");
-//
-//                    //now read the file line by line...
-//                    int lineNum = 0;
-//                    while (sc.hasNextLine()) {
-//                        String line = sc.nextLine();
-//                        lineNum++;
-//                        if(currentList.contains(line)) {
-//                            System.out.println("ho hum, i found it on line " +lineNum);
-//                        }
-//                    }
-//                } catch(IOException ioe) {
-//                    ioe.printStackTrace();
-//                    //handle this
-//                }
-
-
-
-//                        final String file = "src/contacts.txt";
-//                        String line = null;
-//                        ArrayList<String> fileContents = new ArrayList<>();
-//
-//                        try {
-//                            FileReader fReader = new FileReader(file);
-//                            BufferedReader fileBuff = new BufferedReader(fReader);
-//                            while ((line = fileBuff.readLine()) != null) {
-//                                fileContents.add(line);
-//                            }
-//                            fileBuff.close();
-//                        } catch (Exception e) {
-//                            System.out.println(e.getMessage());
-//                        }
-//                        System.out.println(fileContents.contains("ffa"));
-//
-                // *** todo: add a getlinereader() to the first method that worked with the search and see if you can get the line from the result by instering the getlinereader(). then add that to method where you can display the entire line when you input the line number. then find a way to use a contains() so you can pull the line number as long as it contains the keyword or string the user entered.
-
-
-                break;
-            case 4:
-                // Search a contact by number
-                System.out.println("What would you like to remove?");
-                String userSearch2 = scanner.next();
-                if (currentList.contains(userSearch2)) {
-                    currentList.remove(userSearch2);
-//          this is code to rewrite the file
+        do {
+            //        USER MENU!
+            System.out.println("1. View contacts.\n2. Add a new contact\n3. Search a contact by name.\n4. Delete an existing contact.\n5. Exit\n Enter an option (1, 2, 3, 4 or 5):");
+            Scanner scanner = new Scanner(System.in);
+            int userSelection = Integer.parseInt(scanner.nextLine().trim());
+            switch (userSelection) {
+                case 1:
+                    //    View contacts
+                    for (String line : currentList) {
+                        System.out.println(line);
+                    }
+                    x = true;
+                    break;
+                case 2:
+                    // Add a new contact
                     try {
-                        Files.write(toOurDataFile, currentList);
+                        System.out.println("please type the name of the item you would like to add to your list");
+                        String userAddItem = scanner.next();
+                        Files.write(
+                                Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
+                                Arrays.asList(userAddItem), // list with one item
+                                StandardOpenOption.APPEND
+                        );
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     }
-                } else {
-                    System.out.println("Sorry, we do not have that item");
-                }
-                System.out.println(currentList);
-                break;
-            case 5:
-      // Exit
-                System.out.println("Thank you!!");
-                System.exit(0);
-            default:
-                System.err.println("Please enter a number between 1 - 5!");
-                break;
-        }
-      //  System.out.println(currentList); // checking list accuracy
+                    x = true;
+                    break;
+                case 3:
+                    // *** todo: Add the code from the hottodojava website so you can get the line number
+                    // Search a contact by name
+                    System.out.println("What would you like to search for?");
+                    String userSearch = scanner.next();
+                    for (String line : currentList) {
+                        if (line.contains(userSearch))
+                            System.out.println(line);
+                    }
+                    x = true;
+                    break;
+                case 4:
+                    // Search a contact by number
+                    System.out.println("What would you like to remove?");
+                    String userSearch2 = scanner.next();
+                    if (currentList.contains(userSearch2)) {
+                        currentList.remove(userSearch2);
+//          this is code to rewrite the file
+                        try {
+                            Files.write(toOurDataFile, currentList);
+                        } catch (IOException ioe) {
+                            ioe.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("Sorry, we do not have that item");
+                    }
+                    System.out.println(currentList);
+                    x = true;
+                    break;
+                case 5:
+                    // Exit
+                    System.out.println("Thank you!!");
+                    System.exit(0);
+                default:
+                    System.err.println("Please enter a number between 1 - 5!");
+                    break;
+            }
+        } while (x = true);
+
     }
 }
