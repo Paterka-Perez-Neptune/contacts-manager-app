@@ -37,48 +37,38 @@ public class ContactApp {
                     // Add a new contact
                     try {
                         System.out.println("Please type the name of the person you would like to add to your list");
-                        String userAddItem = scanner.nextLine();
+                        String userAddName = scanner.nextLine();
                         System.out.println("Please type their phone number");
                         String userAddPhone = scanner.nextLine();
-                        String newContact = userAddItem + " | " + userAddPhone;
-                        if (currentList.contains(userAddItem)) {
-                            System.err.println("There's already a contact named " + userAddItem + ". Do you want to overwrite it? (Yes/No)");
+                        String newContact = userAddName + " | " + userAddPhone;
+                        if (currentList.contains(userAddName)) {
+                            System.err.println("There's already a contact named " + userAddName + ". Do you want to overwrite it? (Yes/No)");
                             if (scanner.next().equalsIgnoreCase("yes")) {
-                                if (currentList.contains(userAddItem)) {
-                                    currentList.remove(userAddItem);
-                                    try {
-                                        Files.write(toOurDataFile, currentList);
-                                    } catch (IOException ioe) {
-                                        ioe.printStackTrace();
-                                    }
-                                } else {
-                                    System.out.println("Sorry, we do not have that item");
-                                }
+                                // need to remove item
                                 Files.write(
                                         Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
                                         Arrays.asList(newContact), // list with one item
-                                        StandardOpenOption.APPEND
-                                );
+                                        StandardOpenOption.APPEND);
                             } else {
                                 do {
                                     System.out.println("please retype the name of the item you would like to add to your list");
-                                    userAddItem = scanner.next();
-                                    if (currentList.contains(userAddItem)) {
+                                    userAddName = scanner.next();
+                                    if (currentList.contains(userAddName)) {
                                         System.err.println("There's already a contact with this name");
                                     } else {
                                         System.out.println("Success!!");
                                         // add remove stuff
                                         Files.write(
                                                 Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
-                                                Arrays.asList(userAddItem),
+                                                Arrays.asList(newContact),
                                                 StandardOpenOption.APPEND);
                                     }
-                                } while (currentList.contains(userAddItem));
+                                } while (currentList.contains(userAddName));
                             }
                         } else {
                             Files.write(
                                     Paths.get(String.valueOf(toOurDataPlace), "contacts.txt"),
-                                    Arrays.asList(userAddItem), // list with one item
+                                    Arrays.asList(newContact), // list with one item
                                     StandardOpenOption.APPEND);
                         }
                     } catch (IOException ioe) {
@@ -98,11 +88,21 @@ public class ContactApp {
                     x = true;
                     break;
                 case 4:
+
+
+
                     // Search a contact by number
                     System.out.println("What would you like to remove?");
                     String userSearch2 = scanner.next();
                     if (currentList.contains(userSearch2)) {
-                        currentList.remove(userSearch2);
+
+                        for (String line : currentList) {
+                            if (line.contains(userSearch2));
+                                currentList.remove(line);
+
+                        }
+
+
 //          this is code to rewrite the file
                         try {
                             Files.write(toOurDataFile, currentList);
