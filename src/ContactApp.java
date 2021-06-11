@@ -1,15 +1,16 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
+import java.io.LineNumberReader;
 
 import static java.nio.file.Files.readAllLines;
 
 public class ContactApp {
 
+    public int getLineNumber() {
+
+    }
 
     public static void main(String[] args) {
 
@@ -67,14 +68,57 @@ public class ContactApp {
                 }
                 break;
             case 3:
-                //  Search a contact by name
+                // *** todo: Add the code from the hottodojava website so you can get the line number
+                 // Search a contact by name
                 System.out.println("What would you like to search for?");
                 String userSearch = scanner.next();
                 if (currentList.contains(userSearch)) {
+                   ;
                     System.out.println("here is the item you search for: " + userSearch);
                 } else {
                     System.out.println("Sorry, we do not have that item available");
                 }
+              //  File file = new File("contacts.txt");
+
+            //    try {
+//                    Scanner sc = new Scanner(System.in);
+//                    System.out.println("What would you like to search for?");
+//
+//                    //now read the file line by line...
+//                    int lineNum = 0;
+//                    while (sc.hasNextLine()) {
+//                        String line = sc.nextLine();
+//                        lineNum++;
+//                        if(currentList.contains(line)) {
+//                            System.out.println("ho hum, i found it on line " +lineNum);
+//                        }
+//                    }
+//                } catch(IOException ioe) {
+//                    ioe.printStackTrace();
+//                    //handle this
+//                }
+
+
+
+//                        final String file = "src/contacts.txt";
+//                        String line = null;
+//                        ArrayList<String> fileContents = new ArrayList<>();
+//
+//                        try {
+//                            FileReader fReader = new FileReader(file);
+//                            BufferedReader fileBuff = new BufferedReader(fReader);
+//                            while ((line = fileBuff.readLine()) != null) {
+//                                fileContents.add(line);
+//                            }
+//                            fileBuff.close();
+//                        } catch (Exception e) {
+//                            System.out.println(e.getMessage());
+//                        }
+//                        System.out.println(fileContents.contains("ffa"));
+//
+                // *** todo: add a getlinereader() to the first method that worked with the search and see if you can get the line from the result by instering the getlinereader(). then add that to method where you can display the entire line when you input the line number. then find a way to use a contains() so you can pull the line number as long as it contains the keyword or string the user entered.
+
+
                 break;
             case 4:
                 // Search a contact by number
